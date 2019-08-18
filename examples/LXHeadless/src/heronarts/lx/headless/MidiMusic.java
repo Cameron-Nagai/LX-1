@@ -45,7 +45,7 @@ public class MidiMusic extends LXPattern {
 
     private final CompoundParameter wave = new CompoundParameter("Wave", 0);
     private final BooleanParameter triggerSweep = new BooleanParameter("Sweep", false);
-    private final CompoundParameter top = new CompoundParameter("Top", 0.72);
+    private final CompoundParameter top = new CompoundParameter("Top", 1);
 
     public MidiMusic(LX lx) {
         super(lx);
@@ -93,7 +93,7 @@ public class MidiMusic extends LXPattern {
             float posf = position.getValuef();
             for (LXPoint p : model.getPoints()) {
                 blendColor(p.index, lx.hsb(
-                    palette.getHuef() + 0.2f*Math.abs(p.x - model.cx) + 0.2f*Math.abs(p.y - model.cy),
+                    palette.getHuef() + 0.2f*Math.abs(p.x - model.cx) + 0.2f*Math.abs(p.y - model.cy)  + 200,
                     100,
                     Math.max(0, bright - posf*100 - falloff*Math.abs(p.y - posf*model.yMax))
                 ), LXColor.Blend.ADD);

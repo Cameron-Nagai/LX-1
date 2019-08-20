@@ -12,6 +12,8 @@ import heronarts.lx.parameter.CompoundParameter;
 import heronarts.lx.parameter.DiscreteParameter;
 import heronarts.lx.transform.LXVector;
 
+import static heronarts.lx.headless.MathUtils.*;
+// import static heronarts.lx.headless.MathConst.*;
 // import static com.symmetrylabs.util.MathUtils.*;
 // import static com.symmetrylabs.util.MathConstants.*;
 
@@ -61,7 +63,8 @@ public class Voronoi extends LXPattern {
   }
 
   public void run(double deltaMs) {
-    for (LXVector p : getVectors()) {
+//    for (LXVector p : getVectors()) {
+    for (LXPoint p : getModel().getPoints()) {
       float numSites = num.getValuef();
       float lineWidth = width.getValuef();
 

@@ -16,37 +16,33 @@
  */
 
 package heronarts.lx.headless;
-import java.util.List;
 
 import java.io.File;
 import heronarts.lx.LX;
 import heronarts.lx.LXPattern;
+import heronarts.lx.model.GridModel;
 import heronarts.lx.model.LXFixture;
 import heronarts.lx.model.LXModel;
-import heronarts.lx.model.LXPoint;
 import heronarts.lx.output.*;
-import heronarts.lx.midi.LXMidiInput;
+
 /**
  * Example headless CLI for the LX engine. Just write a bit of scaffolding code
  * to load your model, define your outputs, then we're off to the races.
  */
 public class LXHeadless {
 
-  private static final String PIXLITE_ADDRESS = "10.200.1.42";
-
   public static LXModel buildModel() {
     // TODO: implement code that loads and builds your model here
-    return PianoModel.newModel();
+    return new GridModel(5, 30);
   }
 
   public static void addArtNetOutput(LX lx) throws Exception {
-    SimplePixlite pixlite = new SimplePixlite(lx, PIXLITE_ADDRESS);
-    int i = 1;
-    for (List<LXPoint> points: ((PianoModel)lx.model).getChannelPoints()){
-      pixlite.addPixliteOutput(new PointsGrouping(i+"").addPoints(points));
-      ++i;
-    }
-    lx.addOutput(pixlite);
+    lx.engine.addOutput(
+      new LXDatagramOutput(lx).addDatagram(
+        new ArtNetDatagram(lx.model, 512, 0)
+        .setAddress("localhost")
+          )
+  );
   }
 
   public static void addFadeCandyOutput(LX lx) throws Exception {
@@ -83,10 +79,6 @@ public class LXHeadless {
       LXModel model = buildModel();
       LX lx = new LX(model);
 
-      // SimplePixlite pixlite = new SimplePixlite("10.200.1.101");
-      // pixlite.addPixliteOutput(new PointsGrouping("1"));
-      // lx.addOutput(pixlite);
-
       String[] shlomo_controller_ips = { "10.200.1.98" };
       for (String shlomo_controller_ip : shlomo_controller_ips){
         addTenereOutput(lx, shlomo_controller_ip);
@@ -104,7 +96,7 @@ public class LXHeadless {
       }
 
       // TODO: add your own output code here
-      addArtNetOutput(lx);
+//       addArtNetOutput(lx);
 //       addFadecandyOutput(lx);
       addOPCOutput(lx);
 
@@ -113,14 +105,8 @@ public class LXHeadless {
         lx.openProject(new File(args[0]));
       } else {
         lx.setPatterns(new LXPattern[] {
-          new MidiMusic(lx)
+          new ExamplePattern(lx)
         });
-      }
-      List<LXMidiInput> inputs = lx.engine.midi.getInputs();
-      if (!inputs.isEmpty()){
-        System.out.println(inputs.get(0));
-        inputs.get(0).channelEnabled.setValue(true);
-        lx.engine.getDefaultChannel().midiMonitor.setValue(true);
       }
 
       lx.engine.start();

@@ -29,7 +29,7 @@ import heronarts.lx.midi.MidiNoteOn;
 // import com.symmetrylabs.slstudio.model.Strip;
 
 
-public class MidiMusic extends LXPattern {
+public class /**/MidiMusic extends LXPattern {
 
     private final Stack<LXLayer> newLayers = new Stack<LXLayer>();
 

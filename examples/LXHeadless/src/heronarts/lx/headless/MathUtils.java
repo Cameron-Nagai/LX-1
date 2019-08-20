@@ -68,8 +68,8 @@ public final class MathUtils {
   public static float min(float a, float b) { return FastMath.min(a, b); }
   public static float sin(float rad) { return (float)FastMath.sin(rad); }
   public static float cos(float rad) { return (float)FastMath.cos(rad); }
-  public static float radians(float deg) { return DEG_TO_RAD * deg; }
-  public static float degrees(float rad) { return RAD_TO_DEG * rad; }
+  public static float radians(float deg) { return 3.14f / 180f * deg; }
+  public static float degrees(float rad) { return 180f / 3.14f * rad; }
   public static float abs(float val) { return FastMath.abs(val); }
   public static float sqrt(float val) { return (float)FastMath.sqrt(val); }
   public static float pow(float val, int exp) { return (float)FastMath.pow(val, exp); }

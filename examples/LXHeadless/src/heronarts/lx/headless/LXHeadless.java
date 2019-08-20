@@ -113,7 +113,7 @@ public class LXHeadless {
         lx.openProject(new File(args[0]));
       } else {
         lx.setPatterns(new LXPattern[] {
-          new MidiMusic(lx)
+          new ExamplePattern(lx)
         });
       }
       List<LXMidiInput> inputs = lx.engine.midi.getInputs();

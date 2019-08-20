@@ -38,15 +38,15 @@ public class ExamplePattern extends LXPattern {
 
    @Override
    public void run(double deltaMs) {
-      /*
+      
      float hue = this.hue.getValuef();
      float brightness = this.brightness.getValuef();
      float yPos = this.yPos.getValuef();
      float falloff = 100 / (this.width.getValuef());
      for (LXPoint p : model.points) {
        colors[p.index] = LX.hsb(hue, 100, Math.max(0, brightness - falloff * Math.abs(p.yn - yPos)));
-     }*/
-     setColors(0x00ff0000);
+     }
+     // setColors(0x00ff0000);
    }
  }
 

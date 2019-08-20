@@ -87,10 +87,10 @@ public class LXHeadless {
       // pixlite.addPixliteOutput(new PointsGrouping("1"));
       // lx.addOutput(pixlite);
 
-      String[] shlomo_controller_ips = { "10.200.1.98" };
-      for (String shlomo_controller_ip : shlomo_controller_ips){
-        addTenereOutput(lx, shlomo_controller_ip);
-      }
+      // String[] shlomo_controller_ips = { "10.200.1.98" };
+      // for (String shlomo_controller_ip : shlomo_controller_ips){
+      //   addTenereOutput(lx, shlomo_controller_ip);
+      // }
 //       target some OPC servers
       String[] controller_ips = {
 //              "10.200.1.102",
@@ -113,7 +113,7 @@ public class LXHeadless {
         lx.openProject(new File(args[0]));
       } else {
         lx.setPatterns(new LXPattern[] {
-          new ExamplePattern(lx)
+          new CloudsPattern(lx)
         });
       }
       List<LXMidiInput> inputs = lx.engine.midi.getInputs();

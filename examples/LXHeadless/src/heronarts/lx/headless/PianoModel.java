@@ -228,10 +228,10 @@ public class PianoModel extends LXModel {
       strips.add(strip = new StripModel(new StripModel.Metrics(29).setSpacing(0, 1, 0).setOrigin(4, 37, 10)));
       lastChannelPoints.addAll(strip.getPoints());
 
-
+      channelPoints.add(lastChannelPoints = new ArrayList<LXPoint>());
       strips.add(strip = new StripModel(new StripModel.Metrics(27).setSpacing(0, 1, 0).setOrigin(96-4, 0, 10)));
       lastChannelPoints.addAll(strip.getPoints());
-      strips.add(strip = new StripModel(new StripModel.Metrics(27).setSpacing(0, 1, 0).setOrigin(96-4, 37, 10)));
+      strips.add(strip = new StripModel(new StripModel.Metrics(29).setSpacing(0, 1, 0).setOrigin(96-4, 37, 10)));
       lastChannelPoints.addAll(strip.getPoints());
 
       channelPoints.add(lastChannelPoints = new ArrayList<LXPoint>());
@@ -246,22 +246,27 @@ public class PianoModel extends LXModel {
       lastChannelPoints.addAll(strip.getPoints());
       strips.add(strip = new StripModel(new StripModel.Metrics(88).setSpacing(0, 1, 0).setOrigin(13.714f*1f, 78, 23)));
 
+      channelPoints.add(lastChannelPoints = new ArrayList<LXPoint>());
       strips.add(strip = new StripModel(new StripModel.Metrics(88).setSpacing(0, 1, 0).setOrigin(13.714f*2f, 78, 23)));
       lastChannelPoints.addAll(strip.getPoints());
       strips.add(strip = new StripModel(new StripModel.Metrics(88).setSpacing(0, 1, 0).setOrigin(13.714f*2f, 78, 23)));
 
+      channelPoints.add(lastChannelPoints = new ArrayList<LXPoint>());
       strips.add(strip = new StripModel(new StripModel.Metrics(88).setSpacing(0, 1, 0).setOrigin(13.714f*3f, 78, 23)));
       lastChannelPoints.addAll(strip.getPoints());
       strips.add(strip = new StripModel(new StripModel.Metrics(88).setSpacing(0, 1, 0).setOrigin(13.714f*3f, 78, 23)));
 
+      channelPoints.add(lastChannelPoints = new ArrayList<LXPoint>());
       strips.add(strip = new StripModel(new StripModel.Metrics(88).setSpacing(0, 1, 0).setOrigin(13.714f*4f, 78, 23)));
       lastChannelPoints.addAll(strip.getPoints());
       strips.add(strip = new StripModel(new StripModel.Metrics(88).setSpacing(0, 1, 0).setOrigin(13.714f*4f, 78, 23)));
 
+      channelPoints.add(lastChannelPoints = new ArrayList<LXPoint>());
       strips.add(strip = new StripModel(new StripModel.Metrics(88).setSpacing(0, 1, 0).setOrigin(13.714f*5f, 78, 23)));
       lastChannelPoints.addAll(strip.getPoints());
       strips.add(strip = new StripModel(new StripModel.Metrics(88).setSpacing(0, 1, 0).setOrigin(13.714f*5f, 78, 23)));
 
+      channelPoints.add(lastChannelPoints = new ArrayList<LXPoint>());
       strips.add(strip = new StripModel(new StripModel.Metrics(88).setSpacing(0, 1, 0).setOrigin(13.714f*6f, 78, 23)));
       lastChannelPoints.addAll(strip.getPoints());
       strips.add(strip = new StripModel(new StripModel.Metrics(88).setSpacing(0, 1, 0).setOrigin(13.714f*6f, 78, 23)));

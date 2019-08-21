@@ -8,12 +8,15 @@
 			<classpath>
 				<pathelement location="../../lib/gson-2.8.0.jar" />
 				<pathelement location="../../lib/coremidi4j-0.9.jar" />
+				<pathelement location="../../lib/core-3.3.7.jar" />
+
 			</classpath>
 			<compilerarg value="-Xlint"/>
 		</javac>
 		<jar jarfile="./bin/LXHeadless.jar" basedir="./bin">
 			<zipgroupfileset dir="../../lib" includes="coremidi4j-0.9.jar" />
 			<zipgroupfileset dir="../../lib" includes="gson-2.8.0.jar" />
+			<zipgroupfileset dir="../../lib" includes="core-3.3.7.jar" />
 			<manifest>
 				<attribute name="Main-Class" value="heronarts.lx.headless.LXHeadless"/>
 			</manifest>

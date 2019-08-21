@@ -26,6 +26,7 @@ import heronarts.lx.model.LXModel;
 import heronarts.lx.model.LXPoint;
 import heronarts.lx.output.*;
 import heronarts.lx.midi.LXMidiInput;
+import heronarts.lx.LXChannel;
 /**
  * Example headless CLI for the LX engine. Just write a bit of scaffolding code
  * to load your model, define your outputs, then we're off to the races.
@@ -79,6 +80,8 @@ public class LXHeadless {
   }
 
   public static void main(String[] args) {
+
+
     try {
       LXModel model = buildModel();
       LX lx = new LX(model);
@@ -112,15 +115,18 @@ public class LXHeadless {
       if (args.length > 0) {
         lx.openProject(new File(args[0]));
       } else {
+        lx.engine.getDefaultChannel().midiMonitor.setValue(true);
+        lx.engine.getDefaultChannel().autoCycleEnabled.setValue(true);
         lx.setPatterns(new LXPattern[] {
-          new Clouds(lx)
+          new Clouds(lx),
+          new ExamplePattern(lx),
+          new MidiMusic(lx),
         });
       }
       List<LXMidiInput> inputs = lx.engine.midi.getInputs();
       if (!inputs.isEmpty()){
         System.out.println(inputs.get(0));
         inputs.get(0).channelEnabled.setValue(true);
-        lx.engine.getDefaultChannel().midiMonitor.setValue(true);
       }
 
       lx.engine.start();

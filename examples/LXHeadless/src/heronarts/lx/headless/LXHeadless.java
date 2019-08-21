@@ -20,6 +20,7 @@ import java.util.List;
 
 import java.io.File;
 import heronarts.lx.LX;
+import heronarts.lx.LXEngine;
 import heronarts.lx.LXPattern;
 import heronarts.lx.model.LXFixture;
 import heronarts.lx.model.LXModel;
@@ -131,18 +132,19 @@ public class LXHeadless {
 
         });
 
-        LXChannel channelMidi = (LXChannel) lx.engine.getChannel(1);
-        channelMidi.midiMonitor.setValue(true);
-        channelMidi.fader.setValue(1);
-        channelMidi.blendMode.setValue(3);
-        // channelMidi.addMidiListener(new LXChannel.MidiListener() {
+        LXChannel channelPatterns = (LXChannel) lx.engine.getChannel(1);
+        channelPatterns.midiMonitor.setValue(true);
+        channelPatterns.fader.setValue(1);
+        // lx.engine.getDefaultChannel().channelBlends.setValue(new DifferenceBlend);
+        channelPatterns.autoCycleEnabled.setValue(true);
+        // channelPatterns.addMidiListener(new LXChannel.MidiListener() {
         //   public void midiReceived(LXChannel channel, LXShortMessage message) {
         //     if (message instanceof MidiNote) {
         //       String note = ((MidiNote) message).getPitchString();
 
         //       if (note == "48") {
         //         System.out.println("channel.goNext()");
-        //         channelMidi.goNext();
+        //         channelPatterns.goNext();
         //       } else {
         //         System.out.println("instance of MidiNote but not C4");
         //       }
@@ -156,7 +158,11 @@ public class LXHeadless {
       }
       List<LXMidiInput> inputs = lx.engine.midi.getInputs();
       if (!inputs.isEmpty()){
-        System.out.println(inputs.get(0));
+        // private final String string = inputs.get(0);
+        // System.out.println(string);
+      //   if(string = 48 ){
+
+      //   }
         inputs.get(0).channelEnabled.setValue(true);
       }
 

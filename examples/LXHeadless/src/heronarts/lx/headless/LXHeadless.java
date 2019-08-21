@@ -25,7 +25,7 @@ import heronarts.lx.model.LXFixture;
 import heronarts.lx.model.LXModel;
 import heronarts.lx.model.LXPoint;
 import heronarts.lx.output.*;
-import heronarts.lx.midi.LXMidiInput;
+import heronarts.lx.midi.*;
 import heronarts.lx.LXChannel;
 /**
  * Example headless CLI for the LX engine. Just write a bit of scaffolding code
@@ -116,12 +116,43 @@ public class LXHeadless {
         lx.openProject(new File(args[0]));
       } else {
         lx.engine.getDefaultChannel().midiMonitor.setValue(true);
-        lx.engine.getDefaultChannel().autoCycleEnabled.setValue(true);
+        lx.engine.getDefaultChannel().autoCycleEnabled.setValue(false);
         lx.setPatterns(new LXPattern[] {
-          new Clouds(lx),
-          new ExamplePattern(lx),
-          new MidiMusic(lx),
+        new MidiMusic(lx)
+
         });
+
+        lx.engine.addChannel(
+          new LXPattern[]{
+    
+          new Amoeba(lx),
+          new ExamplePattern(lx),
+          new Clouds(lx),
+
+        });
+
+        LXChannel channelMidi = (LXChannel) lx.engine.getChannel(1);
+        channelMidi.midiMonitor.setValue(true);
+        channelMidi.fader.setValue(1);
+        channelMidi.blendMode.setValue(3);
+        // channelMidi.addMidiListener(new LXChannel.MidiListener() {
+        //   public void midiReceived(LXChannel channel, LXShortMessage message) {
+        //     if (message instanceof MidiNote) {
+        //       String note = ((MidiNote) message).getPitchString();
+
+        //       if (note == "48") {
+        //         System.out.println("channel.goNext()");
+        //         channelMidi.goNext();
+        //       } else {
+        //         System.out.println("instance of MidiNote but not C4");
+        //       }
+        //     } else {
+        //       System.out.println("not instance of MidiNote");
+        //     }
+        //   }
+        // });
+
+
       }
       List<LXMidiInput> inputs = lx.engine.midi.getInputs();
       if (!inputs.isEmpty()){

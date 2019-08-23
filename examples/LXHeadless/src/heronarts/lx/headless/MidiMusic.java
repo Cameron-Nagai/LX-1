@@ -8,23 +8,19 @@ import java.util.HashMap;
 import java.lang.Math;
 import java.util.Stack;
 
-// import com.symmetrylabs.slstudio.model.SLModel;
-// import com.symmetrylabs.slstudio.model.StripsModel;
-// import com.symmetrylabs.slstudio.pattern.base.SLPattern;
+import heronarts.lx.*;
 import heronarts.lx.model.LXPoint;
-import heronarts.lx.LX;
-import heronarts.lx.LXPattern;
+import heronarts.lx.modulator.QuadraticEnvelope;
 import heronarts.lx.parameter.BooleanParameter;
 import heronarts.lx.parameter.CompoundParameter;
 import heronarts.lx.parameter.LXParameterListener;
 import heronarts.lx.parameter.LXParameter;
 import heronarts.lx.modulator.Accelerator;
 import heronarts.lx.modulator.LinearEnvelope;
-import heronarts.lx.LXLayer;
-import heronarts.lx.LXUtils;
 import heronarts.lx.color.LXColor;
 import heronarts.lx.midi.MidiNote;
 import heronarts.lx.midi.MidiNoteOn;
+import heronarts.lx.midi.*;
 
 // import com.symmetrylabs.slstudio.model.Strip;
 
@@ -54,6 +50,7 @@ public class MidiMusic extends LXPattern {
         addParameter(top);
         addParameter(wave);
         addParameter(triggerSweep);
+
 
         triggerSweep.setMode(BooleanParameter.Mode.MOMENTARY);
         triggerSweep.addListener(new LXParameterListener() {
@@ -87,6 +84,10 @@ public class MidiMusic extends LXPattern {
         }
 
         public void run(double deltaMs) {
+
+
+
+
             if (!position.isRunning()) {
                 return;
             }
@@ -130,12 +131,18 @@ public class MidiMusic extends LXPattern {
         }
 
         public void run(double deltaMs) {
+
+
+
+
+
             float bVal = brt.getValuef();
             if (bVal <= 0) {
                 return;
             }
             float yVal = yPos.getValuef();
             for (LXPoint p : model.getPoints()) {
+
                 float falloff = 6 - 7*lightSize.getValuef();
                 float b = (float)Math.max(0, bVal - falloff*LXUtils.distance(p.x, p.y, xPos, yVal));
                 if (b > 0) {

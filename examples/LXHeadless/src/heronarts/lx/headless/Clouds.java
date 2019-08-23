@@ -33,7 +33,7 @@ public class Clouds extends LXPattern {
 
   public Clouds(LX lx) {
     super(lx);
-    System.out.println("clouds init");
+//    System.out.println("clouds init");
 
     startTime = System.currentTimeMillis();
 

@@ -25,14 +25,25 @@ import heronarts.lx.LXPattern;
 import heronarts.lx.model.LXFixture;
 import heronarts.lx.model.LXModel;
 import heronarts.lx.model.LXPoint;
+import heronarts.lx.modulator.*;
 import heronarts.lx.output.*;
 import heronarts.lx.midi.*;
 import heronarts.lx.LXChannel;
+import heronarts.lx.LXPattern;
+
+import heronarts.lx.modulator.LXModulator;
+
+import static java.lang.System.currentTimeMillis;
+
 /**
  * Example headless CLI for the LX engine. Just write a bit of scaffolding code
  * to load your model, define your outputs, then we're off to the races.
  */
+
+
 public class LXHeadless {
+  long startTime = System.currentTimeMillis();
+
 
   private static final String PIXLITE_ADDRESS = "10.200.1.42";
 
@@ -80,6 +91,7 @@ public class LXHeadless {
     );
   }
 
+
   public static void main(String[] args) {
 
 
@@ -118,6 +130,7 @@ public class LXHeadless {
       } else {
         lx.engine.getDefaultChannel().midiMonitor.setValue(true);
         lx.engine.getDefaultChannel().autoCycleEnabled.setValue(false);
+     // lx.engine.getDefaultChannel().channelBlends.setValue(new DifferenceBlend);
         lx.setPatterns(new LXPattern[] {
         new MidiMusic(lx)
 
@@ -125,35 +138,67 @@ public class LXHeadless {
 
         lx.engine.addChannel(
           new LXPattern[]{
-    
+
           new Amoeba(lx),
-          new ExamplePattern(lx),
+
           new Clouds(lx),
+          new ExamplePattern(lx),
+
 
         });
+
 
         LXChannel channelPatterns = (LXChannel) lx.engine.getChannel(1);
         channelPatterns.midiMonitor.setValue(true);
         channelPatterns.fader.setValue(1);
-        // lx.engine.getDefaultChannel().channelBlends.setValue(new DifferenceBlend);
+
         channelPatterns.autoCycleEnabled.setValue(true);
-        // channelPatterns.addMidiListener(new LXChannel.MidiListener() {
-        //   public void midiReceived(LXChannel channel, LXShortMessage message) {
-        //     if (message instanceof MidiNote) {
-        //       String note = ((MidiNote) message).getPitchString();
+        channelPatterns.transitionEnabled.setValue(true);
+//        final QuadraticEnvelope patternReset = new QuadraticEnvelope(0, 1, 8000) {
+//          public void onSetValue(double value) {
+//              System.out.println(value);
+//            channelPatterns.fader.setValue(value);
+//          }
+//        };
 
-        //       if (note == "48") {
-        //         System.out.println("channel.goNext()");
-        //         channelPatterns.goNext();
-        //       } else {
-        //         System.out.println("instance of MidiNote but not C4");
-        //       }
-        //     } else {
-        //       System.out.println("not instance of MidiNote");
-        //     }
-        //   }
-        // });
 
+        final QuadraticEnvelope patternReset = new QuadraticEnvelope(0, 1, 8000) {
+          public void onSetValue(double value) {
+
+
+
+
+            System.out.println(value);
+
+
+          }
+        };
+
+
+//
+//          channelPatterns.addModulator(patternReset);
+
+
+
+        channelPatterns.addMidiListener(new LXChannel.MidiListener() {
+
+
+          public void midiReceived(LXChannel channel, LXShortMessage message) {
+            int isOn = 0;
+            if (message instanceof MidiNote) {
+              long timeStamp;
+              timeStamp = System.currentTimeMillis();
+
+
+              String note = ((MidiNote) message).getPitchString();
+              channelPatterns.fader.setValue(isOn);
+
+              patternReset.trigger();
+
+
+            }
+          }
+        });
 
       }
       List<LXMidiInput> inputs = lx.engine.midi.getInputs();
@@ -170,5 +215,19 @@ public class LXHeadless {
     } catch (Exception x) {
       System.err.println(x.getLocalizedMessage());
     }
+
+  }
+
+
+//  public void run(double deltaMs) {
+
+//   if(timeStamp - System.currentTimeMillis() startTime - System.currentTimeMillis()){
+//
+//
+//   }
+
+
+
   }
 }
+

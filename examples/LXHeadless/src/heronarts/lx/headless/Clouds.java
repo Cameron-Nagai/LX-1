@@ -46,6 +46,7 @@ public class Clouds extends LXPattern {
     addParameter("zoom", this.zoom);
   }
   
+
   public void run(double deltaMs) {
     // System.out.println("numpoints " + model.points.length);
     float speed = this.speed.getValuef() / 1000000;

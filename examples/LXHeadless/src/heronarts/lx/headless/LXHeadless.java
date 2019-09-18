@@ -35,17 +35,56 @@ import heronarts.lx.modulator.LXModulator;
 
 import static java.lang.System.currentTimeMillis;
 
+
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+class Helper extends TimerTask
+{
+//  public static int i = 0;
+  public void run()
+  {
+    LXHeadless.timerIsRunning = false;
+
+//    System.out.println("Timer ran " + ++i);
+    LXHeadless.lx.engine.getChannel(1).fader.setValue(1);
+
+
+  }
+}
+
+
+
 /**
  * Example headless CLI for the LX engine. Just write a bit of scaffolding code
  * to load your model, define your outputs, then we're off to the races.
  */
 
-
 public class LXHeadless {
-  long startTime = System.currentTimeMillis();
+static boolean timerIsRunning = false;
+//  public static void main(String[] args)
+
+
+
+
+
+    static Timer timer = new Timer();
+    static TimerTask task = new Helper();
+
+
+
+
+
+
+  static LX lx = new LX(buildModel());
+
+  static long timeStamp = System.currentTimeMillis();
 
 
   private static final String PIXLITE_ADDRESS = "10.200.1.42";
+
+
 
   public static LXModel buildModel() {
     // TODO: implement code that loads and builds your model here
@@ -95,9 +134,12 @@ public class LXHeadless {
   public static void main(String[] args) {
 
 
+
+
+
     try {
-      LXModel model = buildModel();
-      LX lx = new LX(model);
+//      LXModel model = buildModel();
+//      lx = new LX(model);
 
       // SimplePixlite pixlite = new SimplePixlite("10.200.1.101");
       // pixlite.addPixliteOutput(new PointsGrouping("1"));
@@ -186,19 +228,31 @@ public class LXHeadless {
           public void midiReceived(LXChannel channel, LXShortMessage message) {
             int isOn = 0;
             if (message instanceof MidiNote) {
-              long timeStamp;
+
+              if(timerIsRunning == true){
+                timer.cancel();
+                timer.purge();
+
+              }
+              LXHeadless.timer = new Timer();
+              LXHeadless.task = new Helper();
+              LXHeadless.timerIsRunning = true;
+
+              timer.schedule(task, 3000);
+              channelPatterns.fader.setValue(0);
               timeStamp = System.currentTimeMillis();
 
-
               String note = ((MidiNote) message).getPitchString();
-              channelPatterns.fader.setValue(isOn);
+//              channelPatterns.fader.setValue(isOn);
 
-              patternReset.trigger();
+//              patternReset.trigger();
 
 
             }
           }
         });
+
+
 
       }
       List<LXMidiInput> inputs = lx.engine.midi.getInputs();
@@ -216,18 +270,32 @@ public class LXHeadless {
       System.err.println(x.getLocalizedMessage());
     }
 
-  }
-
-
-//  public void run(double deltaMs) {
-
-//   if(timeStamp - System.currentTimeMillis() startTime - System.currentTimeMillis()){
-//
-//
-//   }
-
 
 
   }
+
+  public void run(double deltaMs) {
+
+    System.out.println("help");
+
+    System.out.println(System.currentTimeMillis());
+    System.out.println(timeStamp);
+    System.out.println(System.currentTimeMillis() - timeStamp);
+    if (System.currentTimeMillis() - timeStamp > 2000) {
+      System.out.println("Help");
+      lx.engine.getChannel(1).fader.setValue(1);
+
+    }
+  }
+
+
+
+
+
+
+//  }
 }
+
+
+
 

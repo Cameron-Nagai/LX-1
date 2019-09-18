@@ -21,11 +21,19 @@ import heronarts.lx.color.LXColor;
 import heronarts.lx.midi.MidiNote;
 import heronarts.lx.midi.MidiNoteOn;
 import heronarts.lx.midi.*;
+import heronarts.lx.LXChannel;
+
+
 
 // import com.symmetrylabs.slstudio.model.Strip;
 
 
 public class MidiMusic extends LXPattern {
+
+
+
+
+    static long startTime = System.currentTimeMillis();
 
     private final Stack<LXLayer> newLayers = new Stack<LXLayer>();
 
@@ -84,6 +92,16 @@ public class MidiMusic extends LXPattern {
         }
 
         public void run(double deltaMs) {
+
+
+            System.out.println(System.currentTimeMillis());
+            System.out.println(startTime);
+            System.out.println(System.currentTimeMillis() - startTime);
+            if (System.currentTimeMillis() - startTime > 2000) {
+                System.out.println("Help");
+                lx.engine.getChannel(1).fader.setValue(1);
+
+            }
 
 
 
